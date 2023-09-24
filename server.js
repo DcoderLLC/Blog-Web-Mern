@@ -2,7 +2,10 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const colors = require('colors')
+const dotenv = require('dotenv')
 
+//
+dotenv.config()
 //rest object
 const app = express()
 
@@ -19,7 +22,11 @@ app.get("/",(req, res) =>{
     })
 })
 
+//port
+
+const PORT = process.env.PORT || 8080
+
 //listen
 app.listen(8080, () =>{
-    console.log("Server running on port 8080".bgCyan.white)
+    console.log(`Server running on ${process.env.DEV_MODE} port no ${PORT}`.bgCyan.white)
 })
