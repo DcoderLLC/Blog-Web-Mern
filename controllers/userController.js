@@ -1,5 +1,5 @@
 const userModel = require('../models/userModel')
-
+const bcrypt = require('bcrypt')
 //get all users
 exports.getAllUsers =async (req, res) =>{
     try{
@@ -12,11 +12,11 @@ exports.getAllUsers =async (req, res) =>{
         })
     }
     catch{
-        console.log(error)
+        console.log(issue)
         return res.status(500).send({
             success : flase,
             message : `Error in get all user`,
-            error
+            issue
         })
     }
 }
@@ -40,8 +40,11 @@ exports.registerController = async (req, res) =>{
                 message: `Error in Register, user already registerd`
             })
         }
+
+        const hashedPassword = await bcrypt.hash(password, 10)
+
         //save new user
-        const user = new userModel({username, email, password})
+        const user = new userModel({username, email, password: hashedPassword})
         await user.save()
         return res.status(201).send({
             success: true,
