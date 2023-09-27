@@ -1,7 +1,25 @@
 const userModel = require('../models/userModel')
 
 //get all users
-exports.getAllUsers = () =>{}
+exports.getAllUsers =async (req, res) =>{
+    try{
+        const users = await userModel.find({})
+        return res.status(200).send({
+            userCount: users.length,
+            success: true,
+            message:`all user data`,
+            users
+        })
+    }
+    catch{
+        console.log(error)
+        return res.status(500).send({
+            success : flase,
+            message : `Error in get all user`,
+            error
+        })
+    }
+}
 
 //create user register user || REGISTER CONTROL
 exports.registerController = async (req, res) =>{
